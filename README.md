@@ -7,7 +7,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     DATA LAYER (Role 3)                      │
+│                     DATA LAYER                   │
 │                                                              │
 │  [OHLCV from Kraken API] ──► Validator ──► Cleaner           │
 │                                                              │
@@ -21,7 +21,7 @@
 │              └─────┬───┘  └────────────┘                      │
 │                    │  Fused Signal Output                       │
 ├────────────────────┼───────────────────────────────────────────┤
-│              STRATEGY LAYER (Role 1)                           │
+│              STRATEGY LAYER                           │
 │                                                              │
 │  ┌─────────────┐  ┌────────────┐  ┌──────────────────┐       │
 │  │ Weight Func │  │ Signal Gen │  │ Decision Engine  │       │
@@ -31,7 +31,7 @@
 │         └───────────────────────────────────┘                  │
 │                    │  Decision Output (JSON contract)           │
 ├────────────────────┼───────────────────────────────────────────┤
-│              EXECUTION LAYER (Role 2)                          │
+│              EXECUTION LAYER                          │
 │                                                              │
 │  ┌──────────┐  ┌───────────┐  ┌─────────┐  ┌──────────────┐  │
 │  │Validator │→ │ Executor  │→ │  State  │  │ Circuit      │  │
@@ -48,7 +48,7 @@
 pip install numpy pandas python-dotenv
 ```
 
-### Role 1 — Quant Strategy Engine
+### Quant Strategy Engine
 
 ```python
 from config import StrategyConfig
@@ -59,7 +59,7 @@ decision = decide(prices, cfg=cfg)
 print(decision.to_dict())
 ```
 
-### Role 2 — Execution Agent
+### Execution Agent
 
 ```python
 from execution.config import ExecutionConfig, ExecutionMode
@@ -72,7 +72,7 @@ engine = ExecutionEngine(config, log)
 result = engine.execute_order(decision.to_dict(), price=50000.0)
 ```
 
-### Role 3 — Data / Signal Pipeline
+### Data / Signal Pipeline
 
 ```python
 from signals import SignalPipeline
@@ -120,7 +120,7 @@ quant-architect-agent/
 └── logs/                   ← Runtime logs
 ```
 
-## Role 1 — Quant Strategy Engine
+## Quant Strategy Engine
 
 **Purpose:** Mathematical trading logic. Accepts risk parameter R ∈ [0,1] and produces deterministic trading decisions.
 
@@ -136,7 +136,7 @@ quant-architect-agent/
 python tests/test_quant_engine.py   # 58/58 passing
 ```
 
-## Role 2 — Execution Agent
+## Execution Agent
 
 **Purpose:** Safely execute strategy decisions through validation, state tracking, and order routing.
 
@@ -159,7 +159,7 @@ python tests/test_quant_engine.py   # 58/58 passing
 python tests/test_execution.py   # 32/32 passing
 ```
 
-## Role 3 — Data / AI Signal Engineer
+## Data / AI Signal Engineer
 
 **Purpose:** Collect, process, and generate high-quality trading signals.
 
